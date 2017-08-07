@@ -39,4 +39,52 @@ class ProductController extends Controller
         
         return $this->redirectToRoute('products');
     }
+    
+     /**
+     * @Route("/products/remove", name="products/remove")
+     */
+    public function removeAction(Request $request)
+    {
+        
+       $productId = $request->get('id');
+       $em = $this->getDoctrine()->getManager();
+       $product = $em->getRepository(\AppBundle\Entity\Product::class)->find($productId);
+       
+       
+       
+       $em->remove($product);
+       $em->flush();
+        
+
+        return $this->redirectToRoute('products');
+    }
+    
+     /**
+     * @Route("/products/update", name="products/update")
+     */
+    public function updateAction(Request $request)          
+    {
+        
+        
+       $productId = $request->get('id');
+       $em = $this->getDoctrine()->getManager();
+       $product = $em->getRepository(\AppBundle\Entity\Product::class)->find($productId);
+       
+       $newName = $request->get('name');
+       $newPrice = $request->get('price');
+       $newDesc = $request->get('description');
+       
+       if($newName !== '') { $product->setName($newName); }
+       if($newPrice !== '') {$product->setPrice($newPrice);}
+       if($newDesc !== '') {$product->setDescription($newDesc);}
+       
+       
+       $em->flush();
+        
+        
+        
+        return $this->redirectToRoute('products');
+    }
+    
+    
 }

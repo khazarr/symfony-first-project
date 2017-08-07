@@ -147,6 +147,16 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                 return array (  '_controller' => 'AppBundle\\Controller\\ProductController::addAction',  '_route' => 'products/add',);
             }
 
+            // products/remove
+            if ($pathinfo === '/products/remove') {
+                return array (  '_controller' => 'AppBundle\\Controller\\ProductController::removeAction',  '_route' => 'products/remove',);
+            }
+
+            // products/update
+            if ($pathinfo === '/products/update') {
+                return array (  '_controller' => 'AppBundle\\Controller\\ProductController::updateAction',  '_route' => 'products/update',);
+            }
+
         }
 
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();

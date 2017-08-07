@@ -2,4 +2,4 @@ _assetic:
     resource: .
     type: assetic
 _app:
-    resource: /home/kari/Symfony-projects/db_intro/app/config/routing_dev.yml
+    resource: /home/kari/bitbucket-here/symfony-first/app/config/routing_dev.yml

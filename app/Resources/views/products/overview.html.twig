@@ -4,34 +4,113 @@
 
 {% block body %}
 
-    <h1>PRODUCT OVERVIEW</h1>
-    
-    <form action="{{ path('products/add') }}" method="POST">
-        <label for="name"> Name: </label>
-        <input type="text" name="name"><br> 
+    <div class="container">
         
-        <label for="description"> Description: </label>
-        <input type="text" name="description"><br> 
         
-        <label for="price"> Price: </label>
-        <input type="text" name="price"><br> 
+
+        <div class="row" id="forms">
+            
+            
+            <div class="col-sm-4">
+                
+                <h3> INPUT FORM </h3>
+           
         
-        <input type="submit" name="btnAdd" value="Add product">
-    </form>
+                <form action="{{ path('products/add') }}" method="POST">
+            
+            <div class="form-group">
+                <label for="name"> Name: </label>
+                <input class="form-control" type="text" name="name"><br> 
+            </div>
+            
+            <div class="form-group">
+                <label for="description"> Description: </label>
+                <input class="form-control" type="text" name="description"><br> 
+            </div>
+            
+            <div class="form-group">
+                <label for="price"> Price: </label>
+                <input class="form-control" type="text" name="price"><br> 
+            </div>
+            
+            <input type="submit" name="btnAdd" value="Add product">
+        </form>
+                
+            </div>
     
-    
-    
-    {% if products|length == 0 %}
-        <h3>No products found..</h3>
-    {% endif %}
-    <ul>
+                <div class="col-sm-4">
+                    <h3>REMOVE FORM</h3>
+                    <form action="{{ path('products/remove') }}" method="POST">
+                        <div class="form-group">
+                            <label for="id"> ID: </label>
+                            <input class="form-control" type="text" name="id"><br> 
+                        </div>
+                        
+                        <input type="submit" name="btnRemove" value="Remove item">
+                    </form>
+                </div>
+                
+                <div class="col-sm-4">
+                    <h3> UPDATE FORM </h3>
+                    
+                        <form action="{{ path('products/update') }}" method="POST">
+                            
+                        <div class="form-group">               
+                            <label for="id"> ID: </label>
+                            <input class="form-control" type="text" name="id"><br> 
+                        </div>
+                        
+                         <div class="form-group">
+                            <label for="name"> Name: </label>
+                            <input class="form-control" type="text" name="name"><br> 
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description"> Description: </label>
+                            <input class="form-control" type="text" name="description"><br> 
+                        </div>
+
+                        <div class="form-group">
+                            <label for="price"> Price: </label>
+                            <input class="form-control" type="text" name="price"><br> 
+                        </div>
+            
+                            
+                        <input type="submit" name="btnRemove" value="Update item">
+                    </form>
+                    
+                </div>
+        </div>
+  
+    <div class="header">
+        <h1>PRODUCT OVERVIEW</h1>
+    </div>
+        
+    <div class="db-table">
+      <table class="table table-striped">
+    <thead>
+      <tr>
+        <th> ID </th>
+        <th>Product Name</th>
+        <th>Description</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      
         {% for product in products %}
-            <li>
-                {{ product.getName() }} : {{ product.getPrice() }} $ 
-                <br>
-                <p> Description: {{ product.getDescription() }}
-            </li>
+              <tr>
+                <td> {{ product.getId() }}  </td>
+                <td> {{ product.getName() }} </td>
+                <td> {{ product.getDescription() }} </td>
+                <td> {{ product.getPrice() }} $ </td>
+              </tr>
         {% endfor %}
-    </ul>
-    
+      
+ 
+    </tbody>
+  </table>
+</div> 
+        
+    </div>
 {% endblock %}

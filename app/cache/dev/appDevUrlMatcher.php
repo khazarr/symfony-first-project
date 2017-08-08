@@ -127,6 +127,24 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
+        if (0 === strpos($pathinfo, '/blog')) {
+            // blog
+            if ($pathinfo === '/blog') {
+                return array (  '_controller' => 'AppBundle\\Controller\\BlogController::viewAction',  '_route' => 'blog',);
+            }
+
+            // blog/remove
+            if ($pathinfo === '/blog/remove') {
+                return array (  '_controller' => 'AppBundle\\Controller\\BlogController::removeLastAction',  '_route' => 'blog/remove',);
+            }
+
+            // blog/addrandom
+            if ($pathinfo === '/blog/addrandom') {
+                return array (  '_controller' => 'AppBundle\\Controller\\BlogController::addRandomAction',  '_route' => 'blog/addrandom',);
+            }
+
+        }
+
         // homepage
         if (rtrim($pathinfo, '/') === '') {
             if (substr($pathinfo, -1) !== '/') {

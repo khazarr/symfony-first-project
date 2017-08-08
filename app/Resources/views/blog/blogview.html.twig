@@ -1,0 +1,38 @@
+{% extends 'blog/baseblog.html.twig' %}
+
+
+
+{% block body %}
+    
+    
+   
+
+    <div class="container">
+        <div class="header" style="
+             text-align: center;
+             padding: 1em;
+             margin-bottom: 20px;
+             background-color: #eee;">
+            <h1>COOL DOG BLOG</h1>
+         
+            
+        </div>
+        
+        {% for posts in blog %}
+           <div class="well">
+                <div class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object" src="{{ posts.getImg() }}" 
+                             style="width: 150px; height: 150px ">
+                    </a>
+                    <div class="media-body">
+                    <h4 class="media-heading">{{ posts.getTitle() }} </h4>
+                    <p> {{ posts.getBody() }} </p>
+          
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+            
+    </div>
+{% endblock %}

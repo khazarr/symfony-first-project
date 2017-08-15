@@ -79,18 +79,20 @@ class BlogController extends Controller
         //obtain dog name
         preg_match('/img\/.+\//', $dogImg, $match);
         $dogName = substr($match[0], 4);
-        $dogName = substr($dogName,0,-1);
-        $dogName = ucfirst(str_replace('-', '%20', $dogName));
-        
+        $dogName = substr($dogName,0,-1);              
+    
+        $dogName = ucfirst(str_replace('-', ' ', $dogName));
+        $dogQuery = strtok($dogName, " ");
+      
         
         
         //api url
-//        $url = "https://en.wikipedia.org/w/api.php?action=opensearch&limit=1&search="
-//                . $dogName
-//                . "&format=json";
+        $url = "https://en.wikipedia.org/w/api.php?action=opensearch&limit=1&search="
+                . $dogQuery
+                . "&format=json";
 //        
-//        $url = 'https://en.wikipedia.org/w/api.php?format=xml&action=query&prop=extracts&titles='
-//                . $dogName
+//        $url = 'https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&titles='
+//                . $dogQuery
 //                .'&redirects=true';
 //        $wikiResponse = file_get_contents($url);
 //        
@@ -102,23 +104,23 @@ class BlogController extends Controller
 //         
 //        $url = 'https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&explaintext=1&titles='.$dogName;
 //        
-//        $ch = curl_init();
-//        curl_setopt($ch, CURLOPT_URL, $url);
-//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-//        curl_setopt($ch, CURLOPT_USERAGENT, 'dog bot/1.0 (http://localhost:8000/)');
-//
-//        $wiki = curl_exec($ch);
-//
-//        if (!$wiki) {
-//          exit('cURL Error: '.curl_error($ch));
-//        }
-//
-//        
-//        die(var_dump($wiki));
-        //
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'dog bot/1.0 (http://localhost:8000/)');
+
+        $wiki = curl_exec($ch);
+
+        if (!$wiki) {
+          exit('cURL Error: '.curl_error($ch));
+        }
+        $wiki = json_decode($wiki,true);
+        
+          //die(var_dump($wiki[2][0]));
+        
         
         //create new Blog Post object
-        $blogPost = new BlogPost($dogName,$postBody,$dogImg);
+        $blogPost = new BlogPost($dogName,$wiki[2][0],$dogImg);
         
         $em = $this->getDoctrine()->getEntityManager();
         $em->persist($blogPost);
